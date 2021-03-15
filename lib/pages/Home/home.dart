@@ -14,8 +14,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String _message = '';
-  PushNotificationService _pushNotificationService = PushNotificationService();
+  final PushNotificationService _pushNotificationService =
+      new PushNotificationService();
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text("Message: $_message"),
+              // ignore: deprecated_member_use
               OutlineButton(
                 child: Text("Register My Device"),
                 onPressed: () => _pushNotificationService.register(),

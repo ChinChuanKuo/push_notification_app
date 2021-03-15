@@ -36,9 +36,27 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('flutter-first-frame', function () {
-        navigator.serviceWorker.register('flutter_service_worker.js');
+        //navigator.serviceWorker.register('flutter_service_worker.js');
+        navigator.serviceWorker.register("/firebase-messaging-sw.js");
       });
     }
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-messaging.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyCpn16IzmQe4Tr7glln1tp9UkL44DrSvC8",
+      authDomain: "pushnotificationapp-602ed.firebaseapp.com",
+      databaseURL: "https://pushnotificationapp-602ed-default-rtdb.firebaseio.com",
+      projectId: "pushnotificationapp-602ed",
+      storageBucket: "pushnotificationapp-602ed.appspot.com",
+      messagingSenderId: "678961155053",
+      appId: "1:678961155053:web:a63cf3922afe657d0735e4",
+      measurementId: "G-67N67S72GB"
+    };
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
   </script>
   <script src="main.dart.js" type="application/javascript"></script>
 </body>
