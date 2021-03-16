@@ -1,5 +1,7 @@
-importScripts("https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js");
-importScripts("https://www.gstatic.com/firebasejs/8.3.0/firebase-messaging.js");
+//importScripts("https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js");
+//importScripts("https://www.gstatic.com/firebasejs/8.3.0/firebase-messaging.js");
+importScripts("https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js");
+importScripts("https://www.gstatic.com/firebasejs/7.20.0/firebase-messaging.js");
 firebase.initializeApp({
     apiKey: "AIzaSyCpn16IzmQe4Tr7glln1tp9UkL44DrSvC8",
     authDomain: "pushnotificationapp-602ed.firebaseapp.com",

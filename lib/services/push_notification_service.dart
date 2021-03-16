@@ -1,16 +1,21 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class PushNotificationService {
-  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
   void initialize() {
-    _fcm.setForegroundNotificationPresentationOptions(
-        alert: true, badge: true, sound: true);
-    _fcm.requestPermission();
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+    settingNotification();
     firebaseOnMessage();
     firebaseOnMessageOpenedApp();
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-
+    /*messaging.setForegroundNotificationPresentationOptions(
+        alert: true, badge: true, sound: true);*/
     /*_fcm.configure(
       onMessage: (Map<String, dynamic> message) async =>
           print("onMessage： $message"),
@@ -25,8 +30,33 @@ class PushNotificationService {
     }*/
   }
 
+  AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'high_importance_channel', // id
+    'High Importance Notifications', // title
+    'This channel is used for important notifications.', // description
+    importance: Importance.max,
+  );
+
+  Future<void> settingNotification() async {
+    messaging.setForegroundNotificationPresentationOptions(
+        alert: true, badge: true, sound: true);
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+    print('User granted permission: ${settings.authorizationStatus}');
+  }
+
   void firebaseOnMessage() => FirebaseMessaging.onMessage.listen((event) {
-        if (event != null) {
+        RemoteNotification notification = event.notification;
+        AndroidNotification android = event.notification?.android;
+        print('Android Notification:');
+        if (notification != null && android != null) {
           final title = event.notification.title;
           final body = event.notification.body;
           print("title：$title body：$body");
@@ -46,5 +76,6 @@ class PushNotificationService {
     print("title：$title body：$body");
   }
 
-  void register() => _fcm.getToken().then((token) => print("token：$token"));
+  void register() =>
+      messaging.getToken().then((token) => print("token：$token"));
 }
