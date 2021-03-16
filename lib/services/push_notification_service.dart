@@ -3,13 +3,14 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class PushNotificationService {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  void initialize() {
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  Future<void> initialize() async {
+    //if os system is android
+    /*final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
     flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
+        ?.createNotificationChannel(channel);*/
     settingNotification();
     firebaseOnMessage();
     firebaseOnMessageOpenedApp();
